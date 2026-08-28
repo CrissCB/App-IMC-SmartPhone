@@ -9,10 +9,12 @@ appcompat = "1.8.0"
 material = "1.14.0"
 activityKtx = "1.13.0"
 constraintlayout = "2.2.2"
-navigationFragmentKtx = "2.9.8"
-navigationUiKtx = "2.9.8"
+navigationFragmentKtx = "2.10.0"
+navigationUiKtx = "2.10.0"
+splashscreen = "1.2.0"
 
 [libraries]
+androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "splashscreen" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -27,3 +29,4 @@ androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+navigation-safeargs = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationFragmentKtx" }

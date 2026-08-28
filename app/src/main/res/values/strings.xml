@@ -1,3 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Caluladora de IMC</string>
+
+    <!-- Nombre de la app (usado por el sistema, launcher, manifest) -->
+    <string name="app_name">Calculadora de IMC</string>
+
+    <!-- Pantalla Calculadora -->
+    <string name="calculadora_imc">Calculadora de IMC</string>
+    <string name="peso_kg">Peso (kg)</string>
+    <string name="estatura_m">Estatura (m)</string>
+    <string name="calcular">Calcular</string>
+
+    <!-- Pantalla Historial -->
+    <string name="historial">Historial</string>
+    <string name="historial_vacio">Aún no tienes registros guardados</string>
+
+    <!-- Pantalla Acerca de -->
+    <string name="acerca_de">Acerca de</string>
+    <string name="nombre_app">Calculadora de IMC</string>
+    <string name="version_app">Versión 1.0</string>
+    <string name="descripcion_app">Esta aplicación te permite calcular tu Índice de Masa Corporal (IMC) de forma rápida y guardar un historial de tus mediciones a lo largo del tiempo.</string>
+    <string name="desarrollado_por">Desarrollado por Cristian Camilo Burgos</string>
+
+    <!-- Navegación / accesibilidad -->
+    <string name="regresar">Regresar</string>
+
+    <!-- Mensajes de validación (usados en CalculatorViewModel) -->
+    <string name="error_valores_invalidos">Ingresa valores numéricos válidos</string>
+    <string name="error_valores_negativos">El peso y la estatura deben ser mayores a cero</string>
+
 </resources>

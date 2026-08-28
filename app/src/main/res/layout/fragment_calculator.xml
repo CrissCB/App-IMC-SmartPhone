@@ -15,7 +15,7 @@
         android:layout_marginTop="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/historial"
-        android:src="@android:drawable/ic_menu_recent_history"
+        android:src="@drawable/ic_history"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -109,7 +109,7 @@
         android:layout_marginBottom="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/acerca_de"
-        android:src="@android:drawable/ic_menu_info_details"
+        android:src="@drawable/ic_info"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

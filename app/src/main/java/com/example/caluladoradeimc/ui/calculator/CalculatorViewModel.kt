@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.caluladoradeimc.R
 import com.example.caluladoradeimc.data.AppDatabase
 import com.example.caluladoradeimc.data.HistoryEntity
 import kotlinx.coroutines.launch
@@ -28,14 +29,15 @@ class CalculatorViewModel(application: Application) : AndroidViewModel(applicati
     fun calcularImc(pesoTexto: String, estaturaTexto: String) {
         val peso = pesoTexto.replace(",", ".").toFloatOrNull()
         val estatura = estaturaTexto.replace(",", ".").toFloatOrNull()
+        val contexto = getApplication<Application>()
 
         // Validaciones básicas
         if (peso == null || estatura == null) {
-            _error.value = "Ingresa valores numéricos válidos"
+            _error.value = contexto.getString(R.string.error_valores_invalidos)
             return
         }
         if (peso <= 0f || estatura <= 0f) {
-            _error.value = "El peso y la estatura deben ser mayores a cero"
+            _error.value = contexto.getString(R.string.error_valores_negativos)
             return
         }
 
