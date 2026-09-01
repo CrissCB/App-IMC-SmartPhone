@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BMI Calculator</string>
+    <string name="nombre_app">BMI Calculator</string>
+    <string name="version_app">" Version 1.0"</string>
+    <string name="desarrollado_por">Developed by Cristian Camilo Burgos</string>
+    <string name="regresar">Go back</string>
+    <string name="calculadora_imc">BMI Calculator</string>
+    <string name="peso_kg">Weight (kg)</string>
+    <string name="error_valores_invalidos">Enter valid numerical values.</string>
+    <string name="estatura_m">Height (m)</string>
+    <string name="calcular">Calculate</string>
+    <string name="historial">Record</string>
+    <string name="historial_vacio">You don\'t have any saved records yet.</string>
+    <string name="acerca_de">About</string>
+    <string name="descripcion_app">This application allows you to quickly calculate your Body Mass Index (BMI) and save a history of your measurements over time.</string>
+    <string name="error_valores_negativos">Weight and height must be greater than zero.</string>
+    <string name="select_theme">Dark mode</string>
+</resources>

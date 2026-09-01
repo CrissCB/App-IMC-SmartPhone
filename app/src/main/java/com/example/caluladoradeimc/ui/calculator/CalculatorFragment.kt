@@ -1,10 +1,12 @@
 package com.example.caluladoradeimc.ui.calculator
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -73,6 +75,17 @@ class CalculatorFragment : Fragment() {
             findNavController().navigate(
                 CalculatorFragmentDirections.actionCalculatorFragmentToAboutFragment()
             )
+        }
+
+        val currentNightMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+        binding.switchTheme.isChecked = currentNightMode == Configuration.UI_MODE_NIGHT_YES
+
+        binding.switchTheme.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
         }
 
         observarViewModel()

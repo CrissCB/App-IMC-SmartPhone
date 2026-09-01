@@ -27,5 +27,6 @@
     <!-- Mensajes de validación (usados en CalculatorViewModel) -->
     <string name="error_valores_invalidos">Ingresa valores numéricos válidos</string>
     <string name="error_valores_negativos">El peso y la estatura deben ser mayores a cero</string>
+    <string name="select_theme">Modo oscuro</string>
 
 </resources>
