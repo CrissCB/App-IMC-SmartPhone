@@ -10,11 +10,33 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.caluladoradeimc.databinding.FragmentCalculatorBinding
 
+/**
+ * Pantalla principal de la app (destino inicial del [com.example.caluladoradeimc.R.navigation.nav_graph]).
+ *
+ * Responsabilidad: capturar peso y estatura ingresados por el usuario, delegar
+ * todo el cálculo a [CalculatorViewModel], y reflejar en pantalla el resultado
+ * o los errores que el ViewModel produzca.
+ *
+ * ## Conexiones con el resto del proyecto:
+ * - **[CalculatorViewModel]**: fuente de toda la lógica; este Fragment solo
+ *   la observa y la invoca.
+ * - **`fragment_calculator.xml`**: layout inflado mediante View Binding
+ *   ([FragmentCalculatorBinding]), generado automáticamente a partir del XML.
+ * - **`nav_graph.xml`**: de aquí vienen las clases `CalculatorFragmentDirections`,
+ *   generadas por el plugin Safe Args, que definen a qué pantallas se puede
+ *   navegar desde aquí (Historial y Acerca de).
+ */
 class CalculatorFragment : Fragment() {
 
+    // Patrón estándar de View Binding en Fragments: el binding es nulleable
+    // y solo existe entre onCreateView() y onDestroyView(). El getter `binding`
+    // evita tener que escribir `!!` cada vez que se usa en el resto de la clase.
     private var _binding: FragmentCalculatorBinding? = null
     private val binding get() = _binding!!
 
+    // `by viewModels()` crea (o reutiliza, si ya existe) el ViewModel ligado
+    // al ciclo de vida de este Fragment. Sobrevive a cambios de configuración
+    // (como rotar la pantalla) sin perder el resultado calculado.
     private val viewModel: CalculatorViewModel by viewModels()
 
     override fun onCreateView(
@@ -29,18 +51,24 @@ class CalculatorFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Botón "Calcular": lee el texto crudo de los campos (sin validar aquí)
+        // y se lo pasa tal cual al ViewModel, que es quien decide si es válido.
         binding.btnCalcular.setOnClickListener {
             val peso = binding.etPeso.text.toString()
             val estatura = binding.etEstatura.text.toString()
             viewModel.calcularImc(peso, estatura)
         }
 
+        // Navegación hacia Historial. La acción "action_calculatorFragment_to_historyFragment"
+        // está definida en nav_graph.xml; Safe Args genera este método automáticamente
+        // a partir de ese id.
         binding.btnHistory.setOnClickListener {
             findNavController().navigate(
                 CalculatorFragmentDirections.actionCalculatorFragmentToHistoryFragment()
             )
         }
 
+        // Navegación hacia Acerca de, mismo mecanismo que btnHistory.
         binding.btnAbout.setOnClickListener {
             findNavController().navigate(
                 CalculatorFragmentDirections.actionCalculatorFragmentToAboutFragment()
@@ -50,11 +78,21 @@ class CalculatorFragment : Fragment() {
         observarViewModel()
     }
 
+    /**
+     * Suscribe la UI a los dos LiveData que expone [CalculatorViewModel].
+     *
+     * `viewLifecycleOwner` (y no `this`) se usa deliberadamente como dueño de
+     * la observación: así, si el Fragment queda en el back stack pero su vista
+     * fue destruida (por ejemplo, al navegar a Historial), las actualizaciones
+     * dejan de llegar a una vista que ya no existe, evitando crashes.
+     */
     private fun observarViewModel() {
         viewModel.resultado.observe(viewLifecycleOwner) { resultado ->
             if (resultado != null) {
                 binding.tvResultadoImc.text = String.format("%.1f", resultado.imc)
                 binding.tvCategoria.text = resultado.categoria
+                binding.ivResultadoCategoria.setImageResource(resultado.imagenResId)
+                binding.ivResultadoCategoria.visibility = View.VISIBLE
             }
         }
 
@@ -65,6 +103,15 @@ class CalculatorFragment : Fragment() {
         }
     }
 
+    /**
+     * Libera la referencia al binding cuando la vista del Fragment se destruye.
+     *
+     * Es obligatorio en Fragments (a diferencia de Activities): la vista del
+     * Fragment puede destruirse antes que el Fragment mismo (por ejemplo, al
+     * navegar a otra pantalla pero manteniéndose en el back stack), y si no se
+     * libera el binding aquí, se produce una fuga de memoria porque el binding
+     * retiene referencias a vistas que ya no existen.
+     */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

@@ -1,32 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    Mapa de navegación de la app. Define las 3 pantallas (destinos) y las
+    rutas permitidas entre ellas. El Navigation Component lee este archivo
+    en tiempo de ejecución para saber qué Fragment mostrar y cómo moverse
+    entre ellos, y en tiempo de compilación (vía el plugin Safe Args) para
+    generar las clases "...Directions" que se usan en el código Kotlin
+    (ej. CalculatorFragmentDirections).
+
+    Conexiones con el resto del proyecto:
+    - MainActivity.kt: activity_main.xml contiene el NavHostFragment que
+      carga este grafo (app:navGraph="@navigation/nav_graph").
+    - CalculatorFragment.kt: usa las dos <action> definidas abajo para
+      navegar hacia Historial y Acerca de.
+    - HistoryFragment.kt y AboutFragment.kt: no definen acciones propias
+      porque regresan con popBackStack(), que no necesita una ruta
+      declarada explícitamente.
+-->
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
     app:startDestination="@id/calculatorFragment">
 
+    <!--
+        Destino inicial de la app (el primero que ve el usuario al abrirla,
+        justo después del Splash Screen). Define dos acciones de salida,
+        una hacia cada una de las otras pantallas.
+    -->
     <fragment
         android:id="@+id/calculatorFragment"
         android:name="com.example.caluladoradeimc.ui.calculator.CalculatorFragment"
         android:label="@string/calculadora_imc"
         tools:layout="@layout/fragment_calculator">
 
+        <!--
+            El "id" de esta acción se traduce en el método Kotlin
+            actionCalculatorFragmentToHistoryFragment(), invocado desde
+            CalculatorFragment al tocar btnHistory.
+        -->
         <action
             android:id="@+id/action_calculatorFragment_to_historyFragment"
             app:destination="@id/historyFragment" />
 
+        <!--
+            Igual que la acción anterior, pero hacia Acerca de.
+            Se traduce en actionCalculatorFragmentToAboutFragment().
+        -->
         <action
             android:id="@+id/action_calculatorFragment_to_aboutFragment"
             app:destination="@id/aboutFragment" />
 
     </fragment>
 
+    <!--
+        Pantalla de Historial. No define acciones propias: se llega aquí
+        solo desde calculatorFragment, y se regresa con popBackStack()
+        desde HistoryFragment.kt (btnBack), no con una acción declarada.
+    -->
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.example.caluladoradeimc.ui.history.HistoryFragment"
         android:label="@string/historial"
         tools:layout="@layout/fragment_history" />
 
+    <!--
+        Pantalla "Acerca de". Mismo patrón que historyFragment: sin
+        acciones propias, regreso vía popBackStack() desde AboutFragment.kt.
+    -->
     <fragment
         android:id="@+id/aboutFragment"
         android:name="com.example.caluladoradeimc.ui.about.AboutFragment"
